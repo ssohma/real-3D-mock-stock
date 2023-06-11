@@ -1,0 +1,24 @@
+
+h1{
+    text-align: center;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+th, td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+#currentTime {
+  position: fixed;
+  font-size: 18px;
+  top: 15px;
+  right: 15px;
+}
+#remainingTime{
+  text-align: center;
+  font-size: 18px;
+  margin-top: 10px;
+}
