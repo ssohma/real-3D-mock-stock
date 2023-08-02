@@ -108,14 +108,27 @@ var hours = Math.floor(timeDiff / (1000 * 60 * 60));
   var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
   var remainingTime;
-  if (hours > 22) {
+  if (hours = 23) {
+      if(minutes<1){
+      remainingTime = seconds + "초";
+      document.getElementById("remainingTime").innerHTML = remainingTime + " 후 개장";
+    }
+      else{
     remainingTime = minutes + "분 " + seconds + "초";
     document.getElementById("remainingTime").innerHTML = remainingTime + " 후 폐장";
+      }
   }
-  if (hours < 1) {
+  else if (hours < 1) {
+      if(minutes<1){
+      remainingTime = seconds + "초";
+      document.getElementById("remainingTime").innerHTML = remainingTime + " 후 개장";
+    }
+        else{
     remainingTime = minutes + "분 " + seconds + "초";
     document.getElementById("remainingTime").innerHTML = remainingTime + " 후 개장";
-  } else {
+        }
+  } 
+  else {
     remainingTime = hours + "시간 " + minutes + "분 " + seconds + "초";
     document.getElementById("remainingTime").innerHTML = remainingTime + " 후 개장";
   }
