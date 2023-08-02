@@ -108,7 +108,7 @@ var hours = Math.floor(timeDiff / (1000 * 60 * 60));
   var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
   var remainingTime;
-  if (hours = 23) {
+  if (hours == 23) {
       if(minutes<1){
       remainingTime = seconds + "초";
       document.getElementById("remainingTime").innerHTML = remainingTime + " 후 개장";
