@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>H 조선 주가 그래프</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    h1 {
+      text-align: center;
+      font-size: 35px;
+    }
+    #currentTime {
+      margin-left: 3vw;
+      text-align: left;
+      font-size: 18px;
+    }
+    #beforeopen {
+      text-align: center;
+      font-size: 50px;
+    }
+    #remainingTime {
+      margin-left: 3vw;
+      text-align: left;
+      font-size: 18px;
+    }
+    canvas {
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>주가 차트</h1>
+  <div id="currentTime"></div>
+  <div id="remainingTime"></div>
+  <div id="beforeopen"></div>
+  <canvas id="chart"></canvas>
+
+  <script>
+    function generateDateLabels() {
+      var labels = [];
+      var today = new Date("2023-08-01");
+      for (var i = 0; i <= 6; i++) {
+        var date = new Date(today);
+        date.setDate(today.getDate() + i);
+        labels.push(`${date.getMonth() + 1}월 ${date.getDate()}일`);
+      }
+      return labels;
+    }
+
+    function generateChartData(startDate) {
+      var data = []; 
+      var prices = [50000,30000,10000,30000,35000,40000,20000];
+
+      var startDateObj = new Date(startDate);
+      var endDate = new Date(startDateObj);
+      endDate.setDate(startDateObj.getDate() + 6); 
+
+      var currentDate = new Date();
+      for (var i = 0; i < prices.length; i++) {
+        var currentDateStr = currentDate.toISOString().substring(0, 10);
+        if (currentDate >= startDateObj && currentDate <= endDate) {
+          data.push(prices[i]);
+        } else {
+          data.push(null); 
+        }
+        currentDate.setDate(currentDate.getDate() - 1);
+      }
+
+      return data;
+    }
+
+    var today = new Date();
+    var startDate = new Date("2023-08-01"); 
+
+    if (today >= startDate) {
+      var data = {
+        labels: generateDateLabels(),
+        datasets: [{
+          label: "H 조선 주가",
+          data: generateChartData(startDate),
+          borderColor: "rgba(250,0,0, 1)",
+          fill: false,
+          spanGaps: false 
+        }]
+      };
+      var ctx = document.getElementById("chart").getContext("2d");
+      var chart = new Chart(ctx, {
+        type: "line",
+        data: data,
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true
+              }
+            },
+            y: {
+              display: true,
+              title: {
+                display: true
+              }
+            }
+          }
+        }
+      });
+    }
+    else{
+      document.getElementById("beforeopen").innerHTML = "주식 서버 오픈 전입니다.";
+    }
+
+    function showCurrentTime() {
+      var currentTime = new Date().toLocaleTimeString();
+      document.getElementById("currentTime").innerHTML = "현재 시각: " + currentTime;
+    }
+    setInterval(showCurrentTime, 1000);
+
+    function showRemainingTime() {
+      var currentTime = new Date();
+      var targetTime = new Date();
+      targetTime.setHours(0);
+      targetTime.setMinutes(0);
+      targetTime.setSeconds(0);
+      if (currentTime > targetTime) {
+        targetTime.setDate(targetTime.getDate() + 1);
+      }
+      var timeDiff = targetTime - currentTime;
+      var hours = Math.floor(timeDiff / (1000 * 60 * 60));
+      var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+      var remainingTime;
+      if (hours < 1) {
+        remainingTime = minutes + "분 " + seconds + "초";
+      } else {
+        remainingTime = hours + "시간 " + minutes + "분 " + seconds + "초";
+      }
+      document.getElementById("remainingTime").innerHTML = "주가 갱신: " + remainingTime;
+
+      setTimeout(showRemainingTime, 1000);
+    }
+
+    showRemainingTime();
+  </script>
+</body>
+</html>
