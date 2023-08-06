@@ -59,11 +59,11 @@ function addStock(stock) {
     } else if (stock.name === "F 바이오") {
       window.location.href = "https://www.naver.com"; 
     } else if (stock.name === "N IT") {
-      window.location.href = "https://www.naver.com"; 
+      window.location.href = "../stockchart/N_it.html"; 
     } else if (stock.name === "H 에너지") {
-      window.location.href = "https://www.naver.com"; 
+      window.location.href = "../stockchart/H_에너지.html"; 
     } else if (stock.name === "M 바이오") {
-      window.location.href = "https://www.naver.com"; 
+      window.location.href = "../stockchart/N_바이오.html"; 
     } 
   });
 
