@@ -136,7 +136,10 @@
 
       var remainingTime;
       if (hours < 1) {
-        remainingTime = minutes + "분 " + seconds + "초";
+        if(minutes<1) {
+          remainingTime=seconds+"초";
+        }
+        else remainingTime = minutes + "분 " + seconds + "초";
       } else {
         remainingTime = hours + "시간 " + minutes + "분 " + seconds + "초";
       }
